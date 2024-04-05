@@ -23,13 +23,13 @@ export function ratePossibleK4SolutionV1(attempt: string): number {
 
   let score = 0;
 
-  if (attempt.includes('EASTNORTHEAST') || reversed.includes('EASTNORTHEAST')) {
+  if (attempt.includes('NORTHEAST') || reversed.includes('NORTHEAST')) {
     score++;
   }
 
   if (
-    attempt.slice(21).startsWith('EASTNORTHEAST') ||
-    reversed.slice(21).startsWith('EASTNORTHEAST')
+    attempt.slice(21).startsWith('NORTHEAST') ||
+    reversed.slice(21).startsWith('NORTHEAST')
   ) {
     score++;
   }
@@ -55,7 +55,7 @@ export function ratePossibleK4Solution(attempt: string): number {
   let score = ratePossibleK4SolutionV1(attempt) * 10;
 
   const attemptChars = attempt.split('');
-  const phrase1 = 'EASTNORTHEAST'.split('');
+  const phrase1 = 'NORTHEAST'.split('');
   const phrase2 = 'BERLINCLOCK'.split('');
 
   let hasAllChars1 = true;
@@ -172,7 +172,7 @@ function tryKeysForBStart(encrypted: string, keysGenerator: IterableIterator<str
   for (let key of keysGenerator) {
       for (let alphabetShift of alphabetShifts) {
           const decryptedAttempt = vigDecrypt(encrypted, key, alphabetShift);
-          if (decryptedAttempt.startsWith('BERLINC')) {
+          if (decryptedAttempt.startsWith('BERLIN')) {
               console.log(`Successful Key: ${key}`);
               console.log(`Decrypted Text: ${decryptedAttempt}`);
               // Optionally break if you only need the first match
@@ -221,6 +221,8 @@ function* generateAllCombinations(N: number, baseAlphabet: string): IterableIter
 // Example usage
 export const encryptedA =
   'NBFNIWAIDUL';
+export const encryptedB =
+  'NVTTMZFPKWGD'; 
   const keys = [
     'ORDINATE',
     'WONDERFULTHINGS',
@@ -280,5 +282,6 @@ const N = 6; // Change N to generate combinations of different lengths
 // console.log(pairs);
 // console.log(`Generated ${pairs.length} combinations.`);
 const keysGenerator = generateMatchingFirstThird(N, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-tryKeysForBStart(encryptedA,keysGenerator,alphabet);
+const keysGenerator2 = generateAllCombinations(N,"ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+tryKeysForBStart(encryptedB,keysGenerator2,alphabet);
 console.log(`EAUGH?!@@#!`);
